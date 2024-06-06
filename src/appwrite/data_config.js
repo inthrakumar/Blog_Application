@@ -1,7 +1,7 @@
 import { Client,Databases,Storage,Query,ID } from "appwrite";
 import conf from "../config/conf";
 
-export class Data_Service{
+ class Data_Service{
     client=new Client();
     databases;
     bucket;

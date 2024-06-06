@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Data_Service } from "../appwrite/data_config";
+import Data_Service from "../appwrite/data_config";
 
 function PostCard({ id, title, image }) {
   return (
