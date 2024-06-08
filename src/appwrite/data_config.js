@@ -32,9 +32,9 @@ import conf from "../config/conf";
         }
     }
 
-    async createPost({title,slug,content,image,status,userID}){
+    async createPost({title,slug,content,image_feature,status,userID}){
         try {
-            return await this.databases.createDocument(conf.appwriteDatabase,conf.appwriteCollection,slug,{title,content,image,status,userID});
+            return await this.databases.createDocument(conf.appwriteDatabase,conf.appwriteCollection,slug,{title,content,image_feature,status,userID});
             
         } catch (error) {
             
@@ -44,11 +44,11 @@ import conf from "../config/conf";
         title,
         
         content,
-        image,
+        image_feature,
         status
     }){
         try {
-            return await this.databases.updateDocument(conf.appwriteDatabase,conf.appwriteCollection,slug,{title,content,image,status});
+            return await this.databases.updateDocument(conf.appwriteDatabase,conf.appwriteCollection,slug,{title,content,image_feature,status});
             
         } catch (error) {
             
