@@ -3,7 +3,7 @@ import conf from "../config/conf";
 
 import { Client, Account, ID } from "appwrite";
 
-export class Account{
+export class Account_details{
      client = new Client();
      account;
     constructor(){
@@ -49,5 +49,5 @@ export class Account{
         }
     }
 }
- const authservice=new Account();
+ const authservice=new Account_details();
  export default authservice;

@@ -14,7 +14,7 @@ function Post_form({ post }) {
         title: post?.title || "",
         content: post.content || "",
         slug: post?.slug || "",
-        status: post.status || "active",
+        status: (post.status?"active":"not active") || "active",
       },
     });
   const navigate = useNavigate();
