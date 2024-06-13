@@ -1,6 +1,6 @@
 import React from "react";
 import Container from "../container/Container";
-import { Logo } from "../Logo";
+import  Logo  from "../Logo";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

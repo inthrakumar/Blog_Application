@@ -1,5 +1,5 @@
 import React from "react";
-import { Component, Controller } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Editor } from "@tinymce/tinymce-react";
 
 function Real_time_editor(name, label, control, defaultValue = "") {

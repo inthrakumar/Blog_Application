@@ -1,3 +1,6 @@
+import dotenv from  "dotenv"
+dotenv.config();
+
 const conf={
     appwriteUrl:String(process.env.REACT_APP_APPWRITE_URL),
     appwriteProject:String(process.env.REACT_APP_APPWRITE_PROJECT_ID),
