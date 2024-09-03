@@ -1,35 +1,34 @@
-import React from 'react'
-import appwriteService from "../appwrite/data_config"
-import { useState } from 'react'
-import { useEffect } from 'react'
-import Container from '../components/container/Container'
-import PostCard from "../components/PostCard"
+import React from 'react';
+import appwriteService from '../appwrite/data_config';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import Container from '../scenes/container/Container';
+import PostCard from '../scenes/PostCard';
 
 function Home() {
-
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     appwriteService.getPosts([]).then((posts) => {
       if (posts) {
-        setPosts(posts.documents)
+        setPosts(posts.documents);
       }
-    })
-  }, [])
+    });
+  }, []);
   if (posts.length === 0) {
     return (
-      <div className='w-full py-8'>
-      <Container>
-        <div className="flex flex-wrap">
-          <h1>Login to read posts</h1>
-        </div>
-      </Container>
-    </div>
-    )
+      <div className="w-full py-8">
+        <Container>
+          <div className="flex flex-wrap">
+            <h1>Login to read posts</h1>
+          </div>
+        </Container>
+      </div>
+    );
   }
 
   return (
-    <div className='w-full py-8'>
+    <div className="w-full py-8">
       <Container>
         <div className="flex flex-wrap">
           {posts.map((post) => (
@@ -40,7 +39,7 @@ function Home() {
         </div>
       </Container>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
