@@ -1,31 +1,61 @@
-import React, { useState } from "react";
-import Authservice from "../appwrite/auth";
-import { Link, useNavigate } from "react-router-dom";
-import Button from "./Button";
-import Input from "./Input";
-import Logo from "./Logo";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { login } from "../redux/slice/authSlice";
+import React, { useState } from 'react';
+import Authservice from '../appwrite/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import Logo from './Logo';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/slice/authSlice';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+
+const formSchema = z.object({
+  email: z.string().email({ message: 'Provide a valid email address' }),
+  password: z
+    .string()
+    .min(8, { message: 'Password must be at least 8 characters.' }),
+});
 
 function Login() {
+  const form =
+    useForm <
+    z.infer <
+    typeof formSchema >>
+      {
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+          email: '',
+          password: '',
+        },
+      };
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
-  const [error, setError] = useState("");
-  const login = async (data) => {
-    setError("");
+  const [error, setError] = useState('');
+  const create_session = async (data) => {
+    setError('');
     try {
       const session = await Authservice.login(data);
       if (session) {
         const userData = await Authservice.getAccount();
         if (userData) {
           dispatch(login({ userData }));
-          navigate("/");
+          navigate('/');
         }
       }
     } catch (error) {
-        console.log(error.message);
+      console.log(error.message);
     }
   };
   return (
@@ -51,27 +81,41 @@ function Login() {
           </Link>
         </p>
         {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
-        <form onSubmit={handleSubmit(login)} className="mt-8">
-          <div className="space-y-5">
-            <Input
-              label="Email : "
-              placeholder="Email Address"
-              type="email"
-              {...register("email", {
-                required: true,
-              })}
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(create_session)}
+            className="space-y-8"
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input placeholder="UserEmail" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            <Input
-              label="Password : "
-              type="password"
-              placeholder="Password"
-              {...register("password", { required: true })}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input placeholder="password" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            <Button type="submit" className="w-full">
-              Sign in{" "}
-            </Button>
-          </div>
-        </form>
+
+            <Button type="submit">Login</Button>
+          </form>
+        </Form>
       </div>
     </div>
   );
