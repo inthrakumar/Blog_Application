@@ -1,20 +1,20 @@
-import React, { useCallback } from "react";
-import { useForm } from "react-hook-form";
-import Button from "../Button";
-import Input from "../Input";
-import Real_time_editor from "../Real_time_editor";
-import Select from "../Select";
-import Database_Service_Object from "../../appwrite/data_config";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback } from 'react';
+import { useForm } from 'react-hook-form';
+import Button from '@/components/ui/button';
+import Input from '@/components/ui/input';
+import Real_time_editor from '../Real_time_editor';
+// import Select from '../Select';
+import Database_Service_Object from '../../appwrite/data_config';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 function Post_form({ post }) {
   const { register, handleSubmit, watch, setValue, control, getValues } =
     useForm({
       defaultValues: {
-        title: post?.title || "",
-        content: post.content || "",
-        slug: post?.slug || "",
-        status: (post.status?"active":"not active") || "active",
+        title: post?.title || '',
+        content: post.content || '',
+        slug: post?.slug || '',
+        status: (post.status ? 'active' : 'not active') || 'active',
       },
     });
   const navigate = useNavigate();
@@ -53,19 +53,19 @@ function Post_form({ post }) {
   };
 
   const slugTransform = useCallback((value) => {
-    if (value && typeof value === "string")
+    if (value && typeof value === 'string')
       return value
         .trim()
         .toLowerCase()
-        .replace(/[^a-zA-Z\d\s]+/g, "-")
-        .replace(/\s/g, "-");
+        .replace(/[^a-zA-Z\d\s]+/g, '-')
+        .replace(/\s/g, '-');
   }, []);
 
   React.useEffect(() => {
     watch((value, { name }) => {
-      if (name === "title") {
+      if (name === 'title') {
         {
-          setValue("slug", slugTransform(value.title), {
+          setValue('slug', slugTransform(value.title), {
             shouldValidate: true,
           });
         }
@@ -80,15 +80,15 @@ function Post_form({ post }) {
             label="Title"
             placeholder="Title"
             className="mb-4"
-            {...register("title", { required: true })}
+            {...register('title', { required: true })}
           />
           <Input
             label="Slug :"
             placeholder="Slug"
             className="mb-4"
-            {...register("slug", { required: true })}
+            {...register('slug', { required: true })}
             onInput={(e) => {
-              setValue("slug", slugTransform(e.currentTarget.value), {
+              setValue('slug', slugTransform(e.currentTarget.value), {
                 shouldValidate: true,
               });
             }}
@@ -97,7 +97,7 @@ function Post_form({ post }) {
         <Real_time_editor
           label="Content"
           name="content"
-          defaultValues={getValues("content")}
+          defaultValues={getValues('content')}
         />
         <div className="1/3 px-2">
           <Input
@@ -105,7 +105,7 @@ function Post_form({ post }) {
             type="file"
             className="mb-4"
             accept="image/png, image/jpg, image/jpeg"
-            {...register("image", { required: !post })}
+            {...register('image', { required: !post })}
           />
           {post && (
             <div className="w-full mb-4">
@@ -118,18 +118,18 @@ function Post_form({ post }) {
           )}
         </div>
         <div>
-          <Select
-            options={["active", "inactive"]}
+          {/* <Select
+            options={['active', 'inactive']}
             label="Status"
             className="mb-4"
-            {...register("status", { required: true })}
-          />
+            {...register('status', { required: true })}
+          /> */}
           <Button
             type="submit"
-            bgColor={post ? "bg-green-500" : undefined}
+            bgColor={post ? 'bg-green-500' : undefined}
             className="w-full"
           >
-            {post ? "Update" : "Submit"}
+            {post ? 'Update' : 'Submit'}
           </Button>
         </div>
       </form>
